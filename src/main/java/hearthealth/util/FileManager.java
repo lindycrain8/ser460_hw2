@@ -8,7 +8,7 @@ import java.io.*;
 public class FileManager {
 
     public static void savePatientRecord(PatientRecord record) {
-        String filename = record.getPatientID() + "_PatientInfo.txt";
+        String filename = "data/" + record.getPatientID() + "_PatientInfo.txt";
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(filename))) {
             writer.write("PatientID: " + record.getPatientID());
             writer.newLine();

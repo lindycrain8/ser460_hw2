@@ -7,8 +7,7 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-        primaryStage.setTitle("Welcome to Heart Health Imaging and Recording System");
-        primaryStage.show();
+        new MainMenuView(primaryStage).show();
     }
 
     public static void main(String[] args) {
