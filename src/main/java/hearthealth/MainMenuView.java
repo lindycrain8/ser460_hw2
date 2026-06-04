@@ -30,7 +30,7 @@ public class MainMenuView {
         doctorViewBtn.setPrefWidth(200);
 
         patientIntakeBtn.setOnAction(e -> new PatientIntakeView(stage).show());
-        ctScanTechBtn.setOnAction(e -> {});
+        ctScanTechBtn.setOnAction(e -> new CTScanTechView(stage).show());
         patientViewBtn.setOnAction(e -> {});
         doctorViewBtn.setOnAction(e -> {});
 

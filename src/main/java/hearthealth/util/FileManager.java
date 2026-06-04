@@ -8,7 +8,8 @@ import java.io.*;
 public class FileManager {
 
     public static void savePatientRecord(PatientRecord record) {
-        String filename = "data/" + record.getPatientID() + "_PatientInfo.txt";
+        String filename = "patients/" + record.getPatientID() + "_PatientInfo.txt";
+        new File("patients").mkdirs();
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(filename))) {
             writer.write("PatientID: " + record.getPatientID());
             writer.newLine();
@@ -30,7 +31,7 @@ public class FileManager {
     }
 
     public static PatientRecord loadPatientRecord(String patientID) {
-        String filename = patientID + "_PatientInfo.txt";
+        String filename = "patients/" + patientID + "_PatientInfo.txt";
         try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {
             String pid = reader.readLine().split(": ")[1];
             String firstName = reader.readLine().split(": ")[1];
@@ -50,7 +51,8 @@ public class FileManager {
     }
 
     public static void saveCTTest(CTTest ctTest) {
-        String filename = ctTest.getPatientID() + "_CTResults.txt";
+        String filename = "records/" + ctTest.getPatientID() + "_CTResults.txt";
+        new File("records").mkdirs();
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(filename))) {
             writer.write("PatientID: " + ctTest.getPatientID());
             writer.newLine();
@@ -72,7 +74,7 @@ public class FileManager {
     }
 
     public static CTTest loadCTTest(String patientID) {
-        String filename = patientID + "_CTResults.txt";
+        String filename = "records/" + patientID + "_CTResults.txt";
         try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {
             String pid = reader.readLine().split(": ")[1];
             int totalCACScore = Integer.parseInt(reader.readLine().split(": ")[1]);
