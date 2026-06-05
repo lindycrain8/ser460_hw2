@@ -13,7 +13,7 @@ public class Receptionist extends User {
         super("", "", "Receptionist");
     }
 
-    public String generatePatientID() {
+    public void generatePatientID(PatientRecord record) {
         int highestID = 9999;
         File[] files = new File("patients").listFiles();
         if (files != null) {
@@ -30,10 +30,13 @@ public class Receptionist extends User {
                 }
             }
         }
-        return String.valueOf(highestID + 1);
+        
+        String newID = String.valueOf(highestID + 1);
+        record.setPatientID(newID);
     }
 
     public void inputPatientInformation(PatientRecord record) {
+        generatePatientID(record);
         FileManager.savePatientRecord(record);
     }
 

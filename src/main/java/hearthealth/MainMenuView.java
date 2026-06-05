@@ -31,7 +31,7 @@ public class MainMenuView {
 
         patientIntakeBtn.setOnAction(e -> new PatientIntakeView(stage).show());
         ctScanTechBtn.setOnAction(e -> new CTScanTechView(stage).show());
-        patientViewBtn.setOnAction(e -> {});
+        patientViewBtn.setOnAction(e -> new PatientView(stage).show());
         doctorViewBtn.setOnAction(e -> {});
 
         VBox layout = new VBox(15);
