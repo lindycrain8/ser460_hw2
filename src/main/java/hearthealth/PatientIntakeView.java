@@ -1,7 +1,7 @@
 package hearthealth;
 
+import hearthealth.model.Appointment;
 import hearthealth.model.PatientRecord;
-import hearthealth.util.FileManager;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -9,6 +9,9 @@ import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+
+import java.util.Date;
+import java.util.UUID;
 
 public class PatientIntakeView {
 
@@ -33,6 +36,7 @@ public class PatientIntakeView {
         TextArea healthHistoryField = new TextArea();
         healthHistoryField.setPrefRowCount(3);
         TextField insuranceIDField = new TextField();
+        DatePicker examDatePicker = new DatePicker();
 
         form.add(new Label("First Name:"), 0, 0);
         form.add(firstNameField, 1, 0);
@@ -46,17 +50,21 @@ public class PatientIntakeView {
         form.add(healthHistoryField, 1, 4);
         form.add(new Label("Insurance ID:"), 0, 5);
         form.add(insuranceIDField, 1, 5);
+        form.add(new Label("Exam Date:"), 0, 6);
+        form.add(examDatePicker, 1, 6);
 
         Button saveBtn = new Button("Save");
         Button backBtn = new Button("Back to Main Menu");
         backBtn.setVisible(false);
-
         Label confirmationLabel = new Label("");
 
         saveBtn.setOnAction(e -> {
-            String patientID = new Receptionist().generatePatientID();
+            if (examDatePicker.getValue() == null) {
+                confirmationLabel.setText("Please select an exam date.");
+                return;
+            }
             PatientRecord record = new PatientRecord(
-                patientID,
+                "",
                 firstNameField.getText(),
                 lastNameField.getText(),
                 emailField.getText(),
@@ -64,11 +72,22 @@ public class PatientIntakeView {
                 healthHistoryField.getText(),
                 insuranceIDField.getText()
             );
-            FileManager.savePatientRecord(record);
-            confirmationLabel.setText("Patient saved. ID: " + patientID);
+            Receptionist receptionist = new Receptionist();
+            receptionist.inputPatientInformation(record);
+            String generatedID = record.getPatientID();
+
+            Date examDate = java.sql.Date.valueOf(examDatePicker.getValue());
+            Appointment appointment = new Appointment(
+                UUID.randomUUID().toString(),
+                generatedID,
+                examDate
+            );
+            receptionist.scheduleExam(appointment);
+
+            confirmationLabel.setText("Patient saved. ID: " + generatedID);
             backBtn.setVisible(true);
         });
-        
+
         backBtn.setOnAction(e -> new MainMenuView(stage).show());
 
         VBox layout = new VBox(15);
@@ -76,7 +95,7 @@ public class PatientIntakeView {
         layout.setPadding(new Insets(20));
         layout.getChildren().addAll(title, form, saveBtn, confirmationLabel, backBtn);
 
-        Scene scene = new Scene(layout, 500, 500);
+        Scene scene = new Scene(layout, 500, 550);
         stage.setScene(scene);
     }
 }

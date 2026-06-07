@@ -6,6 +6,9 @@ import hearthealth.model.User;
 import hearthealth.util.FileManager;
 
 import java.io.File;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 
 public class Receptionist extends User {
 
@@ -41,6 +44,17 @@ public class Receptionist extends User {
     }
 
     public void scheduleExam(Appointment appointment) {
-        //to do
+        new File("appointments").mkdirs();
+        String filename = "appointments/" + appointment.getPatientID() + "_Appointment.txt";
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(filename))) {
+            writer.write("AppointmentID: " + appointment.getAppointmentID());
+            writer.newLine();
+            writer.write("PatientID: " + appointment.getPatientID());
+            writer.newLine();
+            writer.write("AppointmentDate: " + appointment.getAppointmentDate());
+            writer.newLine();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

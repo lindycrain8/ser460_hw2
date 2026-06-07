@@ -1,5 +1,7 @@
 package hearthealth.model;
 
+import hearthealth.util.FileManager;
+
 public class CTTest {
     private String patientID;
     private int totalCACScore;
@@ -75,12 +77,11 @@ public class CTTest {
     public void setPDAScore(int PDAScore) {
         this.PDAScore = PDAScore;
     }
-
+    
     public void storeCTScanData() {
-        //to do
+        FileManager.saveCTTest(this);
     }
-
     public void getCACScores() {
-        //to do
+        FileManager.loadCTTest(this.patientID);
     }
 }

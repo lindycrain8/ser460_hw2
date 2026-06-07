@@ -10,10 +10,6 @@ public class CTScanTechnician extends User {
         super("", "", "CTScanTechnician");
     }
 
-    public void performCTScan() {
-        //to do
-    }
-
     public void recordCACScore(CTTest ctTest) {
         FileManager.saveCTTest(ctTest);
     }

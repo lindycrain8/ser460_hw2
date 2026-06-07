@@ -2,6 +2,8 @@ package hearthealth.util;
 
 import hearthealth.model.CTTest;
 import hearthealth.model.PatientRecord;
+import hearthealth.model.Appointment;
+import java.util.Date;
 
 import java.io.*;
 
@@ -88,6 +90,26 @@ public class FileManager {
         } catch (FileNotFoundException e) {
             return null;
         } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+    
+    public static Appointment loadAppointment(String patientID) {
+        String filename = "appointments/" + patientID + "_Appointment.txt";
+        try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {
+            String appointmentID = reader.readLine().split(": ")[1];
+            String pid = reader.readLine().split(": ")[1];
+            String dateStr = reader.readLine().split(": ")[1];
+            java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyy-MM-dd");
+            Date appointmentDate = sdf.parse(dateStr);
+            return new Appointment(appointmentID, pid, appointmentDate);
+        } catch (FileNotFoundException e) {
+            return null;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        } catch (java.text.ParseException e) {
             e.printStackTrace();
             return null;
         }

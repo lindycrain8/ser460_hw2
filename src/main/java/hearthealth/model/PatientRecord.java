@@ -1,5 +1,7 @@
 package hearthealth.model;
 
+import hearthealth.util.FileManager;
+
 public class PatientRecord {
     private String patientID;
     private String firstName;
@@ -78,10 +80,10 @@ public class PatientRecord {
     }
 
     public void storePatientInformation() {
-        //to do
+        FileManager.savePatientRecord(this);
     }
 
     public void getPatientInformation() {
-        //to do
+        FileManager.loadPatientRecord(this.patientID);
     }
 }

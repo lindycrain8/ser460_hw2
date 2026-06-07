@@ -34,8 +34,4 @@ public class User {
     public void setRole(String role) {
         this.role = role;
     }
-
-    public void authenticate() {
-        //to do
-    }
 }

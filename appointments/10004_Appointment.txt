@@ -1,0 +1,3 @@
+AppointmentID: 66a26787-9a62-4a53-a59c-9c4e003e25e8
+PatientID: 10004
+AppointmentDate: 2026-06-18

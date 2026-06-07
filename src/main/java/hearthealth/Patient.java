@@ -81,8 +81,4 @@ public class Patient extends User {
             ctTest.getCACScores();
         }
     }
-
-    public void login() {
-        //to do
-    }
 }

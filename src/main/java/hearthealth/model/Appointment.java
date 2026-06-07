@@ -36,12 +36,4 @@ public class Appointment {
     public void setAppointmentDate(Date appointmentDate) {
         this.appointmentDate = appointmentDate;
     }
-
-    public void scheduleCTScan() {
-        //to do
-    }
-
-    public void provideAppointmentInfo() {
-        //to do
-    }
 }
