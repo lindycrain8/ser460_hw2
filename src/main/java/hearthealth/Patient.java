@@ -3,7 +3,6 @@ package hearthealth;
 import hearthealth.model.CTTest;
 import hearthealth.model.PatientRecord;
 import hearthealth.model.User;
-import hearthealth.util.FileManager;
 
 public class Patient extends User {
 
@@ -18,11 +17,11 @@ public class Patient extends User {
     public Patient() {
         super("", "", "Patient");
     }
-    
+
     public void setPatientRecord(PatientRecord patientRecord) {
         this.patientRecord = patientRecord;
     }
-    
+
     public PatientRecord getPatientRecord() {
         return this.patientRecord;
     }
@@ -76,9 +75,6 @@ public class Patient extends User {
     }
 
     public void viewCTScanResults(String patientID) {
-        CTTest ctTest = FileManager.loadCTTest(patientID);
-        if (ctTest != null) {
-            ctTest.getCACScores();
-        }
+        CTTest.getCACScores(patientID);
     }
 }

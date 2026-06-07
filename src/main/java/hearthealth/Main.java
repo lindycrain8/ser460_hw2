@@ -1,5 +1,6 @@
 package hearthealth;
 
+import hearthealth.view.MainMenuView;
 import javafx.application.Application;
 import javafx.stage.Stage;
 

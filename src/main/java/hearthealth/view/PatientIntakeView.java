@@ -1,5 +1,6 @@
-package hearthealth;
+package hearthealth.view;
 
+import hearthealth.Receptionist;
 import hearthealth.model.Appointment;
 import hearthealth.model.PatientRecord;
 import javafx.geometry.Insets;

@@ -1,8 +1,10 @@
-package hearthealth;
+package hearthealth.view;
 
+import hearthealth.CTScanTechnician;
 import hearthealth.model.Appointment;
 import hearthealth.model.CTTest;
-import hearthealth.util.FileManager;
+import hearthealth.model.PatientRecord;
+
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -35,11 +37,12 @@ public class CTScanTechView {
 
         lookUpBtn.setOnAction(e -> {
             String patientID = patientIDField.getText();
-            if (FileManager.loadPatientRecord(patientID) == null) {
+            PatientRecord record = PatientRecord.getPatientInformation(patientID);
+            if (record == null) {
                 messageLabel.setText("Error: Wrong patient ID.");
                 return;
             }
-            Appointment appointment = FileManager.loadAppointment(patientID);
+            Appointment appointment = Appointment.provideAppointmentInfo(patientID);
             showScanForm(patientID, appointment);
         });
 

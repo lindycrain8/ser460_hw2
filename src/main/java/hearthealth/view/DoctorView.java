@@ -1,8 +1,8 @@
-package hearthealth;
+package hearthealth.view;
 
+import hearthealth.HeartSpecialist;
 import hearthealth.model.CTTest;
 import hearthealth.model.PatientRecord;
-import hearthealth.util.FileManager;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -17,6 +17,7 @@ import javafx.stage.Stage;
 
 public class DoctorView {
 
+    private HeartSpecialist specialist = new HeartSpecialist();
     private Stage stage;
 
     public DoctorView(Stage stage) {
@@ -37,12 +38,13 @@ public class DoctorView {
 
         viewResultsBtn.setOnAction(e -> {
             String patientID = patientIDField.getText();
-            PatientRecord record = FileManager.loadPatientRecord(patientID);
+            PatientRecord record = PatientRecord.getPatientInformation(patientID);
             if (record == null) {
                 messageLabel.setText("Error: Wrong patient ID.");
                 return;
             }
-            CTTest ctTest = FileManager.loadCTTest(patientID);
+            specialist.reviewCTScanResults(patientID);
+            CTTest ctTest = CTTest.getCACScores(patientID);
             if (ctTest == null) {
                 messageLabel.setText("No CT scan data available yet.");
                 return;
@@ -60,7 +62,6 @@ public class DoctorView {
     }
 
     private void showResults(PatientRecord record, CTTest ctTest) {
-        HeartSpecialist specialist = new HeartSpecialist();
 
         TextField totalCACField = new TextField(String.valueOf(ctTest.getTotalCACScore()));
         totalCACField.setEditable(false);

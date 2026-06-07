@@ -2,7 +2,6 @@ package hearthealth;
 
 import hearthealth.model.CTTest;
 import hearthealth.model.User;
-import hearthealth.util.FileManager;
 
 public class HeartSpecialist extends User {
 
@@ -11,10 +10,7 @@ public class HeartSpecialist extends User {
     }
 
     public void reviewCTScanResults(String patientID) {
-        CTTest ctTest = FileManager.loadCTTest(patientID);
-        if (ctTest != null) {
-            ctTest.getCACScores();
-        }
+        CTTest.getCACScores(patientID);
     }
 
     public String determineRisk(int totalCACScore) {

@@ -1,9 +1,11 @@
 package hearthealth.model;
 
-public class User {
+public class User implements Role {
     private String userID;
     private String password;
     private String role;
+    private String roleName;
+    private String permissions;
 
     public User(String userID, String password, String role) {
         this.userID = userID;
@@ -33,5 +35,15 @@ public class User {
 
     public void setRole(String role) {
         this.role = role;
+    }
+
+    @Override
+    public String getRoleName() {
+        return roleName;
+    }
+
+    @Override
+    public String getPermissions() {
+        return permissions;
     }
 }

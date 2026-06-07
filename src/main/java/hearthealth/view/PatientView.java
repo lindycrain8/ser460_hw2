@@ -1,8 +1,8 @@
-package hearthealth;
+package hearthealth.view;
 
+import hearthealth.Patient;
 import hearthealth.model.CTTest;
 import hearthealth.model.PatientRecord;
-import hearthealth.util.FileManager;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -39,12 +39,14 @@ public class PatientView {
 
         resultsBtn.setOnAction(e -> {
             String patientID = patientIDField.getText();
-            PatientRecord record = FileManager.loadPatientRecord(patientID);
+            PatientRecord record = PatientRecord.getPatientInformation(patientID);
             if (record == null) {
                 messageLabel.setText("Error: Wrong patient ID.");
                 return;
             }
-            CTTest ctTest = FileManager.loadCTTest(patientID);
+            Patient patient = new Patient();
+            patient.viewCTScanResults(patientID);
+            CTTest ctTest = CTTest.getCACScores(patientID);
             if (ctTest == null) {
                 messageLabel.setText("No CT scan data is available.");
                 return;

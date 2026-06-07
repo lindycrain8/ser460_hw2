@@ -1,6 +1,12 @@
 package hearthealth.model;
 
-import hearthealth.util.FileManager;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 
 public class PatientRecord {
     private String patientID;
@@ -80,10 +86,45 @@ public class PatientRecord {
     }
 
     public void storePatientInformation() {
-        FileManager.savePatientRecord(this);
+        new File("patients").mkdirs();
+        String filename = "patients/" + patientID + "_PatientInfo.txt";
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(filename))) {
+            writer.write("PatientID: " + patientID);
+            writer.newLine();
+            writer.write("FirstName: " + firstName);
+            writer.newLine();
+            writer.write("LastName: " + lastName);
+            writer.newLine();
+            writer.write("Email: " + email);
+            writer.newLine();
+            writer.write("PhoneNumber: " + phoneNumber);
+            writer.newLine();
+            writer.write("HealthHistory: " + healthHistory);
+            writer.newLine();
+            writer.write("InsuranceID: " + insuranceID);
+            writer.newLine();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
-    public void getPatientInformation() {
-        FileManager.loadPatientRecord(this.patientID);
+    public static PatientRecord getPatientInformation(String patientID) {
+        String filename = "patients/" + patientID + "_PatientInfo.txt";
+        try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {
+            String pid = reader.readLine().split(": ")[1];
+            String firstName = reader.readLine().split(": ")[1];
+            String lastName = reader.readLine().split(": ")[1];
+            String email = reader.readLine().split(": ")[1];
+            String phoneNumber = reader.readLine().split(": ")[1];
+            String healthHistory = reader.readLine().split(": ")[1];
+            String insuranceID = reader.readLine().split(": ")[1];
+            return new PatientRecord(pid, firstName, lastName, email,
+                                     phoneNumber, healthHistory, insuranceID);
+        } catch (FileNotFoundException e) {
+            return null;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 }

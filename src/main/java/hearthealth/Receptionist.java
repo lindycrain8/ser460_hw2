@@ -3,10 +3,9 @@ package hearthealth;
 import hearthealth.model.Appointment;
 import hearthealth.model.PatientRecord;
 import hearthealth.model.User;
-import hearthealth.util.FileManager;
 
-import java.io.File;
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
@@ -33,14 +32,13 @@ public class Receptionist extends User {
                 }
             }
         }
-        
         String newID = String.valueOf(highestID + 1);
         record.setPatientID(newID);
     }
 
     public void inputPatientInformation(PatientRecord record) {
         generatePatientID(record);
-        FileManager.savePatientRecord(record);
+        record.storePatientInformation();
     }
 
     public void scheduleExam(Appointment appointment) {

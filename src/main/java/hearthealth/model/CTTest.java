@@ -1,6 +1,12 @@
 package hearthealth.model;
 
-import hearthealth.util.FileManager;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 
 public class CTTest {
     private String patientID;
@@ -77,11 +83,47 @@ public class CTTest {
     public void setPDAScore(int PDAScore) {
         this.PDAScore = PDAScore;
     }
-    
+
     public void storeCTScanData() {
-        FileManager.saveCTTest(this);
+        new File("records").mkdirs();
+        String filename = "records/" + patientID + "_CTResults.txt";
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(filename))) {
+            writer.write("PatientID: " + patientID);
+            writer.newLine();
+            writer.write("TotalCACScore: " + totalCACScore);
+            writer.newLine();
+            writer.write("LMScore: " + LMScore);
+            writer.newLine();
+            writer.write("LADScore: " + LADScore);
+            writer.newLine();
+            writer.write("LCXScore: " + LCXScore);
+            writer.newLine();
+            writer.write("RCAScore: " + RCAScore);
+            writer.newLine();
+            writer.write("PDAScore: " + PDAScore);
+            writer.newLine();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
-    public void getCACScores() {
-        FileManager.loadCTTest(this.patientID);
+
+    public static CTTest getCACScores(String patientID) {
+        String filename = "records/" + patientID + "_CTResults.txt";
+        try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {
+            String pid = reader.readLine().split(": ")[1];
+            int totalCACScore = Integer.parseInt(reader.readLine().split(": ")[1]);
+            int LMScore = Integer.parseInt(reader.readLine().split(": ")[1]);
+            int LADScore = Integer.parseInt(reader.readLine().split(": ")[1]);
+            int LCXScore = Integer.parseInt(reader.readLine().split(": ")[1]);
+            int RCAScore = Integer.parseInt(reader.readLine().split(": ")[1]);
+            int PDAScore = Integer.parseInt(reader.readLine().split(": ")[1]);
+            return new CTTest(pid, totalCACScore, LMScore, LADScore,
+                              LCXScore, RCAScore, PDAScore);
+        } catch (FileNotFoundException e) {
+            return null;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 }
